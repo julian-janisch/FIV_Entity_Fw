@@ -13,8 +13,11 @@ namespace CodeFirstNewDatabaseSample_Janisch
         {
             using (var db = new BlogContext())
             {
-                Console.Write("Enter a name for a new blog:");
-                var name = Console.ReadLine();
+                Console.Write("Enter a name for a new blog: ");
+                var blogname = Console.ReadLine();
+                Console.Write("Enter your name: ");
+                var author = Console.ReadLine();
+                var name = blogname + " - written from: " + author;
 
                 var blog = new Blog { Name = name };
                 db.Blogs.Add(blog);
@@ -24,10 +27,13 @@ namespace CodeFirstNewDatabaseSample_Janisch
                             orderby b.Name
                             select b;
 
+                Console.WriteLine("All blogs in the database:"); 
                 foreach (var item in query)
                 {
                     Console.WriteLine(item.Name);
                 }
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey(); 
             }
         }
     }
@@ -37,7 +43,7 @@ namespace CodeFirstNewDatabaseSample_Janisch
         public int BlogId { get; set; }
         public string Name { get; set; }
 
-        public List<Post> Posts { get; set; }
+        public virtual List<Post> Posts { get; set; }
     }
 
     public class Post
